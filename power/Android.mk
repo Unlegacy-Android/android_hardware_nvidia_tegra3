@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Unlegacy Android Project
+# Copyright (C) 2012 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TEGRA3_BASE := hardware/nvidia/tegra3
 
-PRODUCT_PACKAGES += \
-	power.tegra3
+LOCAL_PATH := $(call my-dir)
 
-PRODUCT_COPY_FILES += \
-	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
+# HAL module implemenation stored in
+# hw/<POWERS_HARDWARE_MODULE_ID>.<ro.hardware>.so
+include $(CLEAR_VARS)
 
-$(call inherit-product-if-exists, vendor/nvidia/tegra3/nvidia-vendor.mk)
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/hw
+LOCAL_SHARED_LIBRARIES := liblog libcutils libutils libdl
+LOCAL_SRC_FILES := tegra3_power.cpp nvpowerhal.cpp powerhal_utils.cpp timeoutpoker.cpp
+LOCAL_MODULE := power.tegra3
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SHARED_LIBRARY)
