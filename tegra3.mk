@@ -15,8 +15,11 @@
 TEGRA3_BASE := hardware/nvidia/tegra3
 
 PRODUCT_PACKAGES += \
+	keystore.tegra3 \
 	libstagefrighthw \
-	power.tegra3
+	libtf_crypto_sst \
+	power.tegra3 \
+	tf_daemon
 
 PRODUCT_COPY_FILES += \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc

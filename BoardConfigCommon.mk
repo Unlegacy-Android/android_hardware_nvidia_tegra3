@@ -24,3 +24,6 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
+
+# Security
+BOARD_USES_SECURE_SERVICES := true
