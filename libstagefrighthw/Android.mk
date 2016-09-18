@@ -1,4 +1,5 @@
-# Copyright (C) 2017 The Unlegacy Android Project
+#
+# Copyright (C) 2016 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,14 +12,29 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-TEGRA3_BASE := hardware/nvidia/tegra3
+LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
 
-PRODUCT_PACKAGES += \
-	libstagefrighthw \
-	power.tegra3
+LOCAL_SRC_FILES := \
+    NVOMXPlugin.cpp
 
-PRODUCT_COPY_FILES += \
-	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
+LOCAL_C_INCLUDES := \
+        frameworks/native/include/media/openmax \
+        frameworks/native/include/media/hardware
 
-$(call inherit-product-if-exists, vendor/nvidia/tegra3/nvidia-vendor.mk)
+LOCAL_CFLAGS := -Wall -Werror -DLOG_TAG=\"libstagefrighthw\"
+
+LOCAL_SHARED_LIBRARIES := \
+        libbinder \
+        libutils \
+        libcutils \
+        libdl \
+        liblog \
+        libui \
+
+LOCAL_MODULE := libstagefrighthw
+
+include $(BUILD_SHARED_LIBRARY)
+
