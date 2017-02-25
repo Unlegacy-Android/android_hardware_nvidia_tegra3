@@ -22,6 +22,7 @@ PRODUCT_PACKAGES += \
 	tf_daemon
 
 PRODUCT_COPY_FILES += \
+	$(TEGRA3_BASE)/rootdir/init.tegra3.rc:root/init.tegra3.rc \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
 
 $(call inherit-product-if-exists, vendor/nvidia/tegra3/nvidia-vendor.mk)
