@@ -19,7 +19,16 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 0660 /sys/devices/platform/host1x/nvavp/boost_sclk
     chmod 0660 /sys/devices/tegradc.0/enable
-    chmod 0660 /sys/devices/tegradc.0/enable
+    chmod 0660 /sys/devices/tegradc.1/enable
+
+    chown system system /dev/cpu_freq_min
+    chown system system /dev/cpu_freq_max
+    chown system system /dev/min_online_cpus
+    chown system system /dev/max_online_cpus
+    chmod 0660 /dev/cpu_freq_min
+    chmod 0660 /dev/cpu_freq_max
+    chmod 0660 /dev/min_online_cpus
+    chmod 0660 /dev/max_online_cpus
 
     # Throughput hinting is designed to save power by slowing down the gpu
     # if it is beating the desired frame.  Without hinting, the gpu frequency
