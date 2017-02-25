@@ -25,4 +25,11 @@ PRODUCT_COPY_FILES += \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.rc:root/init.tegra3.rc \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
 
+ADDITIONAL_BUILD_PROPERTIES += \
+	debug.hwui.render_dirty_regions=false \
+	persist.tegra.nvmmlite=1 \
+	ro.opengles.version=131072 \
+	ro.zygote.disable_gl_preload=true \
+	sys.max_texture_size=2048
+
 $(call inherit-product-if-exists, vendor/nvidia/tegra3/nvidia-vendor.mk)
