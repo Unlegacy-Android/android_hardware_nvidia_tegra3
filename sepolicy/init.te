@@ -1,0 +1,5 @@
+# Allow writing /sys/kernel/debug/scaling/use_throughput_hint
+allow init debugfs_pmqos:file w_file_perms;
+
+# Allow setting PRISM permissions
+allow init sysfs_devices_tegradc:lnk_file { read };

@@ -27,3 +27,4 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 
 # Security
 BOARD_USES_SECURE_SERVICES := true
+BOARD_SEPOLICY_DIRS += $(TEGRA3_BASE)/sepolicy
