@@ -1,1 +1,3 @@
-allow mediacodec sysfs_modules_tegrafuse:file r_file_perms;
+ifdef(`mediacodec', `
+  allow mediacodec sysfs_modules_tegrafuse:file r_file_perms;
+')
