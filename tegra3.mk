@@ -33,3 +33,9 @@ ADDITIONAL_BUILD_PROPERTIES += \
 	sys.max_texture_size=2048
 
 $(call inherit-product-if-exists, vendor/nvidia/tegra3/nvidia-vendor.mk)
+
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 20 || echo 1),)
+$(call inherit-product-if-exists, vendor/widevine/arm-generic/widevine-vendor.mk)
+else
+$(call inherit-product-if-exists, vendor/widevine/tegra3/widevine-vendor.mk)
+endif
