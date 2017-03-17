@@ -29,8 +29,8 @@
 #define MAX_CHARS 32
 #define MAX_INPUT_DEV_COUNT 12
 #define MAX_USE_CASE_STRING_SIZE 80
-// This needs set to the largest power hint in the enum in hardware/power.h
-#define MAX_POWER_HINT_COUNT POWER_HINT_LOW_POWER
+
+#define MAX_POWER_HINT_COUNT 12
 
 #define DEFAULT_MIN_ONLINE_CPUS     2
 #define DEFAULT_MAX_ONLINE_CPUS     4
