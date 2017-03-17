@@ -29,7 +29,12 @@ LOCAL_C_INCLUDES := \
 	libcore/include \
 	$(LOCAL_PATH)/../security/tf_sdk/include
 
-LOCAL_CFLAGS := -fvisibility=hidden -Wall -Werror
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -le 19 || echo 1),)
+LOCAL_C_INCLUDES += external/openssl/include
+LOCAL_CFLAGS += -DANDROID_API_KK_OR_OLDER
+endif
+
+LOCAL_CFLAGS += -fvisibility=hidden -Wall -Werror
 
 LOCAL_SHARED_LIBRARIES := libcutils liblog libcrypto libtf_crypto_sst
 
