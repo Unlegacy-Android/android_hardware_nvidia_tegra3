@@ -25,7 +25,11 @@
 #include <cutils/log.h>
 
 #include <hardware/hardware.h>
+#ifdef ANDROID_API_MM_OR_LATER
 #include <hardware/keymaster0.h>
+#else
+#include <hardware/keymaster.h>
+#endif
 
 #include <openssl/bn.h>
 #include <openssl/err.h>
@@ -36,8 +40,11 @@
 #include <cryptoki.h>
 #include <pkcs11.h>
 
+#ifdef ANDROID_API_MM_OR_LATER
 #include <UniquePtr.h>
-
+#else
+#include <utils/UniquePtr.h>
+#endif
 
 /** The size of a key ID in bytes */
 #define ID_LENGTH 32
@@ -45,6 +52,10 @@
 /** The current stored key version. */
 const static uint32_t KEY_VERSION = 1;
 
+#ifndef ANDROID_API_MM_OR_LATER
+typedef keymaster_device_t keymaster0_device_t;
+typedef keymaster_device keymaster0_device;
+#endif
 
 struct EVP_PKEY_Delete {
     void operator()(EVP_PKEY* p) const {
@@ -218,7 +229,11 @@ static void logOpenSSLError(const char* location) {
  * Convert from OpenSSL's BIGNUM format to TEE's Big Integer format.
  */
 static ByteArray* bignum_to_array(const BIGNUM* bn) {
+#ifdef ANDROID_API_MM_OR_LATER
     size_t bignumSize = BN_num_bytes(bn);
+#else
+    const int bignumSize = BN_num_bytes(bn);
+#endif
 
     Unique_CK_BYTE bytes(new CK_BYTE[bignumSize]);
 
@@ -970,8 +985,13 @@ struct keystore_module HAL_MODULE_INFO_SYM
 __attribute__ ((visibility ("default"))) = {
     .common = {
         .tag = HARDWARE_MODULE_TAG,
+#ifdef ANDROID_API_MM_OR_LATER
         .module_api_version = KEYMASTER_MODULE_API_VERSION_0_3,
         .hal_api_version = HARDWARE_HAL_API_VERSION,
+#else
+        version_major: 1,
+        version_minor: 0,
+#endif
         .id = KEYSTORE_HARDWARE_MODULE_ID,
         .name = "Keymaster TEE HAL",
         .author = "The Android Open Source Project",
