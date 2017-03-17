@@ -28,3 +28,16 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 # Security
 BOARD_USES_SECURE_SERVICES := true
 BOARD_SEPOLICY_DIRS += $(TEGRA3_BASE)/sepolicy
+
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -le 19 || echo 1),)
+BOARD_SEPOLICY_UNION += \
+	app.te \
+	device.te \
+	drmserver.te \
+	file.te \
+	file_contexts \
+	init.te \
+	surfaceflinger.te \
+	system_app.te \
+	ueventd.te
+endif
