@@ -271,8 +271,10 @@ void common_power_hint(__attribute__ ((unused)) struct power_module *module,
                                                  DEFAULT_MIN_ONLINE_CPUS,
                                                  ms2ns(2000));
         break;
+#ifdef ANDROID_API_LP_OR_LATER
 	case POWER_HINT_LOW_POWER:
 		break;
+#endif
     default:
         ALOGE("Unknown power hint: 0x%x", hint);
         break;

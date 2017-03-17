@@ -24,4 +24,9 @@ LOCAL_SHARED_LIBRARIES := liblog libcutils libutils libdl
 LOCAL_SRC_FILES := tegra3_power.cpp nvpowerhal.cpp powerhal_utils.cpp timeoutpoker.cpp
 LOCAL_MODULE := power.tegra3
 LOCAL_MODULE_TAGS := optional
+
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 20 || echo 1),)
+LOCAL_CFLAGS += -DANDROID_API_LP_OR_LATER
+endif
+
 include $(BUILD_SHARED_LIBRARY)

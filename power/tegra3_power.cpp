@@ -58,6 +58,7 @@ static int tegra3_power_open(__attribute__ ((unused)) const hw_module_t *module,
     return 0;
 }
 
+#ifdef ANDROID_API_LP_OR_LATER
 static void tegra3_set_feature(__attribute__ ((unused)) struct power_module *module, feature_t feature, __attribute__ ((unused)) int state)
 {
     switch (feature) {
@@ -69,6 +70,7 @@ static void tegra3_set_feature(__attribute__ ((unused)) struct power_module *mod
         break;
     }
 }
+#endif
 
 static struct hw_module_methods_t power_module_methods = {
     open: tegra3_power_open,
@@ -77,7 +79,11 @@ static struct hw_module_methods_t power_module_methods = {
 struct power_module HAL_MODULE_INFO_SYM = {
     common: {
         tag: HARDWARE_MODULE_TAG,
+#ifdef ANDROID_API_LP_OR_LATER
         module_api_version: POWER_MODULE_API_VERSION_0_3,
+#else
+        module_api_version: POWER_MODULE_API_VERSION_0_2,
+#endif
         hal_api_version: HARDWARE_HAL_API_VERSION,
         id: POWER_HARDWARE_MODULE_ID,
         name: "Tegra 3 Power HAL",
@@ -90,5 +96,7 @@ struct power_module HAL_MODULE_INFO_SYM = {
     init: tegra3_power_init,
     setInteractive: tegra3_power_set_interactive,
     powerHint: tegra3_power_hint,
+#ifdef ANDROID_API_LP_OR_LATER
     setFeature: tegra3_set_feature,
+#endif
 };
