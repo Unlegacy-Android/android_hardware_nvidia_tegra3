@@ -45,7 +45,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.tegra.nvmmlite=1 \
 	ro.opengles.version=131072 \
 	ro.zygote.disable_gl_preload=true \
-	sys.max_texture_size=2048
+	sys.max_texture_size=2048 \
+	persist.media.treble_omx=false
 
 $(call inherit-product-if-exists, vendor/nvidia/tegra3/nvidia-vendor.mk)
 
