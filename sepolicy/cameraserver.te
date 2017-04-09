@@ -1,4 +1,4 @@
-ifdef(`cameraserver', `
+ifdef(`android_api_n_or_later', `
   allow cameraserver gpu_device:chr_file rw_file_perms;
   allow cameraserver nvhost_device:chr_file rw_file_perms;
   allow cameraserver sysfs_modules_tegrafuse:file r_file_perms;
