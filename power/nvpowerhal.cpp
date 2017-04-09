@@ -15,6 +15,19 @@
  */
 #define LOG_TAG "powerHAL::common"
 
+#include <errno.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/socket.h>
+#include <cutils/uevent.h>
+#include <sys/poll.h>
+#include <pthread.h>
+#include <linux/netlink.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 
@@ -111,6 +124,71 @@ static bool is_available_frequency(struct powerhal_info *pInfo, int freq)
     return false;
 }
 
+#define UEVENT_MSG_LEN 2048
+#define UEVENT_STRING "online@/devices/system/cpu/"
+static int uevent_event()
+{
+    char msg[UEVENT_MSG_LEN];
+    char *cp;
+    int n, cpu, ret, retry = RETRY_TIME_CHANGING_FREQ;
+
+    n = recv(pfd.fd, msg, UEVENT_MSG_LEN, MSG_DONTWAIT);
+    if (n <= 0) {
+        return -1;
+    }
+    if (n >= UEVENT_MSG_LEN) {   /* overflow -- discard */
+        return -1;
+    }
+
+    cp = msg;
+
+    if (strstr(cp, UEVENT_STRING)) {
+        ALOGE("%s: uevent_event recieved: %s", __func__, cp);
+    }
+    return 0;
+}
+
+void *thread_uevent(__attribute__((unused)) void *x)
+{
+    while (1) {
+        int nevents, ret;
+
+        nevents = poll(&pfd, 1, -1);
+
+        if (nevents == -1) {
+            if (errno == EINTR)
+                continue;
+            ALOGE("%s: poll_wait failed\n", __func__);
+            break;
+        }
+        ret = uevent_event();
+        if (ret < 0)
+            ALOGE("%: error processing the uevent event", __func__);
+    }
+    return NULL;
+}
+
+
+static void uevent_init()
+{
+    struct sockaddr_nl client;
+    pthread_t tid;
+    pfd.fd = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_KOBJECT_UEVENT);
+
+    if (pfd.fd < 0) {
+        ALOGE("%s: failed to open: %s", __func__, strerror(errno));
+        return;
+    }
+    memset(&client, 0, sizeof(struct sockaddr_nl));
+    pthread_create(&tid, NULL, thread_uevent, NULL);
+    client.nl_family = AF_NETLINK;
+    client.nl_pid = tid;
+    client.nl_groups = -1;
+    pfd.events = POLLIN;
+    bind(pfd.fd, (void *)&client, sizeof(struct sockaddr_nl));
+    return;
+}
+
 void common_power_open(struct powerhal_info *pInfo)
 {
     int i;
@@ -187,6 +265,9 @@ void common_power_open(struct powerhal_info *pInfo)
     pInfo->hint_interval[POWER_HINT_INTERACTION] = 90000;
 
     free(buf);
+
+    // Initialize uevent to handle cpu events
+    uevent_init();
 }
 
 void common_power_init(__attribute__ ((unused)) struct power_module *module,
