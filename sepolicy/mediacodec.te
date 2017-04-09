@@ -1,3 +1,3 @@
-ifdef(`mediacodec', `
+ifdef(`android_api_n_or_later', `
   allow mediacodec sysfs_modules_tegrafuse:file r_file_perms;
 ')
