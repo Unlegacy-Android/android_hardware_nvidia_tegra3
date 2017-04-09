@@ -20,6 +20,7 @@ static struct powerhal_info *pInfo;
 static struct input_dev_map input_devs[] = {
 		{-1, "atmel-maxtouch\n"},
 		{-1, "elan-touchscreen\n"},
+		{-1, "ft5x0x_ts\n"},
        };
 
 static void tegra3_power_init(struct power_module *module)
