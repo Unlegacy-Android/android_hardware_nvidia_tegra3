@@ -210,11 +210,10 @@ void common_power_set_interactive(__attribute__ ((unused)) struct power_module *
     int i;
     int dev_id;
     char path[80];
-    const char* state = (0 == on)?"0":"1";
-    const char* lp_state = (on)?"1":"0";
-    const char* gov = (on == 0)?"conservative":"interactive";
+    const char* state = (on == 1) ? "1" : "0";
+    const char* hs_load = (on == 1) ? "75" : "85";
 
-    sysfs_write("/sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/no_lp", lp_state);
+    sysfs_write("/sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/no_lp", state);
     ALOGI("Setting low power cluster %s", lp_state);
 
     sysfs_write("/sys/devices/platform/host1x/nvavp/boost_sclk", state);
@@ -239,8 +238,8 @@ void common_power_set_interactive(__attribute__ ((unused)) struct power_module *
         }
     }
 
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor", gov);
-    ALOGI("Setting scaling_governor to %s", gov);
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load", hs_load);
+    ALOGI("Setting interactive go_hispeed_load to %s", hs_load);
 
 }
 
@@ -265,11 +264,11 @@ void common_power_hint(__attribute__ ((unused)) struct power_module *module,
         // Stutters observed during transition animations at lower frequencies
         pInfo->mTimeoutPoker->requestPmQosTimed("/dev/cpu_freq_min",
                                                  pInfo->max_frequency,
-                                                 ms2ns(2000));
+                                                 ms2ns(3000));
         // Keeps a minimum of 2 cores online for 2s
         pInfo->mTimeoutPoker->requestPmQosTimed("/dev/min_online_cpus",
                                                  DEFAULT_MIN_ONLINE_CPUS,
-                                                 ms2ns(2000));
+                                                 ms2ns(3000));
         break;
 #ifdef ANDROID_API_LP_OR_LATER
 	case POWER_HINT_LOW_POWER:
