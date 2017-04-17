@@ -21,6 +21,11 @@ PRODUCT_PACKAGES += \
 	power.tegra3 \
 	tf_daemon
 
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 25 || echo 1),)
+PRODUCT_PACKAGES += \
+	libnvossh
+endif
+
 PRODUCT_COPY_FILES += \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.rc:root/init.tegra3.rc \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
