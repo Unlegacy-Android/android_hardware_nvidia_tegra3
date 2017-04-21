@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44576cb4_27e07498",
+        "filename": "tegra3.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000003
+      },
+      "writtenOn": "2017-04-21T16:02:23Z",
+      "side": 1,
+      "message": "Not that anyone is building the old stuff, but 24 ;-)",
+      "range": {
+        "startLine": 24,
+        "startChar": 47,
+        "endLine": 24,
+        "endChar": 49
+      },
+      "revId": "394b8124ae78086ec9cdf5612a291e97c28fda69",
+      "serverId": "d5e41ece-075f-43fb-b5a6-48951f3d7b1d",
+      "unresolved": false
+    }
+  ]
+}
