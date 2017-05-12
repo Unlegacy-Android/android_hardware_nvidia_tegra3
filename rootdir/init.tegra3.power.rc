@@ -66,6 +66,8 @@ on boot
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpufreq/interactive/boost_factor 2
     write /sys/devices/system/cpu/cpufreq/interactive/sustain_load 80
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 500000
     chown system system /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
     chown system system /sys/devices/system/cpu/cpufreq/interactive/max_boost
     restorecon_recursive /sys/devices/system/cpu/cpufreq/interactive
