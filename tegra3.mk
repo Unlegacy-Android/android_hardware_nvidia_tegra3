@@ -25,7 +25,7 @@ PRODUCT_COPY_FILES += \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.rc:root/init.tegra3.rc \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
 
-ADDITIONAL_BUILD_PROPERTIES += \
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	debug.hwui.render_dirty_regions=false \
 	persist.tegra.nvmmlite=1 \
 	ro.opengles.version=131072 \
