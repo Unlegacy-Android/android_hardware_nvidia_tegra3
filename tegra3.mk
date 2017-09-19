@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#	  http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,11 +15,25 @@
 TEGRA3_BASE := hardware/nvidia/tegra3
 
 PRODUCT_PACKAGES += \
-	keystore.tegra3 \
 	libstagefrighthw \
 	libtf_crypto_sst \
-	power.tegra3 \
 	tf_daemon
+
+# Keystore
+PRODUCT_PACKAGES += \
+	keystore.tegra3 \
+	android.hardware.keymaster@3.0-impl
+
+# Power
+PRODUCT_PACKAGES += \
+	power.tegra3 \
+	android.hardware.power@1.0-impl
+
+# Graphics
+PRODUCT_PACKAGES += \
+	android.hardware.graphics.allocator@2.0-impl \
+	android.hardware.graphics.composer@2.1-impl \
+	android.hardware.graphics.mapper@2.0-impl
 
 PRODUCT_COPY_FILES += \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.rc:root/init.tegra3.rc \
