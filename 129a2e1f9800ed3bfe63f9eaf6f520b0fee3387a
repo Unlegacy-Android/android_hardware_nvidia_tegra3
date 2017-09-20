@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9e3ddf7_71f5dc12",
+        "filename": "tegra3.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000003
+      },
+      "writtenOn": "2017-09-20T08:32:51Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be just PRODUCT_PROPERTY_OVERRIDES?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "129a2e1f9800ed3bfe63f9eaf6f520b0fee3387a",
+      "serverId": "d5e41ece-075f-43fb-b5a6-48951f3d7b1d",
+      "unresolved": false
+    }
+  ]
+}
