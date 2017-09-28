@@ -44,21 +44,6 @@ static void tegra3_power_hint(struct power_module *module, power_hint_t hint,
     common_power_hint(module, pInfo, hint, data);
 }
 
-static int tegra3_power_open(__attribute__ ((unused)) const hw_module_t *module, const char *name,
-                          __attribute__ ((unused)) hw_device_t **device)
-{
-    if (strcmp(name, POWER_HARDWARE_MODULE_ID))
-        return -EINVAL;
-
-    if (!pInfo) {
-        pInfo = (powerhal_info*)calloc(1, sizeof(powerhal_info));
-
-        common_power_open(pInfo);
-    }
-
-    return 0;
-}
-
 #ifdef ANDROID_API_LP_OR_LATER
 static void tegra3_set_feature(__attribute__ ((unused)) struct power_module *module, feature_t feature, __attribute__ ((unused)) int state)
 {
@@ -72,6 +57,45 @@ static void tegra3_set_feature(__attribute__ ((unused)) struct power_module *mod
     }
 }
 #endif
+
+static int tegra3_power_open(__attribute__ ((unused)) const hw_module_t *module, const char *name,
+                          __attribute__ ((unused)) hw_device_t **device)
+{
+    if (strcmp(name, POWER_HARDWARE_MODULE_ID))
+        return -EINVAL;
+
+    if (!pInfo) {
+        pInfo = (powerhal_info*)calloc(1, sizeof(powerhal_info));
+        power_module *dev = (power_module *)calloc(1,
+                sizeof(power_module));
+
+        if (dev) {
+            /* Common hw_device_t fields */
+            dev->common.tag = HARDWARE_MODULE_TAG;
+#ifdef ANDROID_API_LP_OR_LATER
+            dev->common.module_api_version = POWER_MODULE_API_VERSION_0_3;
+#else
+            dev->common.module_api_version = POWER_MODULE_API_VERSION_0_2;
+#endif
+            dev->common.hal_api_version = HARDWARE_HAL_API_VERSION;
+            dev->init = tegra3_power_init;
+            dev->setInteractive = tegra3_power_set_interactive;
+            dev->powerHint = tegra3_power_hint;
+#ifdef ANDROID_API_LP_OR_LATER
+            dev->setFeature = tegra3_set_feature;
+#endif
+            *device = (hw_device_t*)dev;
+        } else
+            return -ENOMEM;
+
+        if(pInfo)
+            common_power_open(pInfo);
+        else
+            return -ENOMEM;
+    }
+
+    return 0;
+}
 
 static struct hw_module_methods_t power_module_methods = {
     open: tegra3_power_open,
