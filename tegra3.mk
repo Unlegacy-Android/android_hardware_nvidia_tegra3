@@ -19,6 +19,12 @@ PRODUCT_PACKAGES += \
 	libtf_crypto_sst \
 	tf_daemon
 
+# libc_util used by proprietary binaries on android >= 8.0
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 || echo 1),)
+PRODUCT_PACKAGES += \
+	libc_util
+endif
+
 # Keystore
 PRODUCT_PACKAGES += \
 	keystore.tegra3 \
@@ -31,7 +37,6 @@ PRODUCT_PACKAGES += \
 
 # Graphics
 PRODUCT_PACKAGES += \
-	libc_util \
 	android.hardware.graphics.allocator@2.0-impl \
 	android.hardware.graphics.composer@2.1-impl \
 	android.hardware.graphics.mapper@2.0-impl

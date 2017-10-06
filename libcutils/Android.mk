@@ -14,6 +14,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 || echo 1),)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := atomic.c
@@ -23,3 +24,4 @@ LOCAL_MODULE := libc_util
 LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
+endif
