@@ -36,5 +36,9 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_MODULE := libstagefrighthw
 
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 || echo 1),)
+LOCAL_PROPRIETARY_MODULE := true
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
