@@ -41,9 +41,16 @@ PRODUCT_PACKAGES += \
 	android.hardware.graphics.composer@2.1-impl \
 	android.hardware.graphics.mapper@2.0-impl
 
+# Move tf_daemon to /vendor on android >= 8.0
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 || echo 1),)
+PRODUCT_COPY_FILES += \
+	$(TEGRA3_BASE)/rootdir/init.tegra3-o.rc:root/init.tegra3.rc \
+	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
+else
 PRODUCT_COPY_FILES += \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.rc:root/init.tegra3.rc \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
+endif
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	debug.hwui.render_dirty_regions=false \
