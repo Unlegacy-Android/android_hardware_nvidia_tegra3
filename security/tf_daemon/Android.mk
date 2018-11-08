@@ -23,4 +23,8 @@ LOCAL_MODULE:= tf_daemon
 LOCAL_STATIC_LIBRARIES := libtee_client_api_driver
 LOCAL_MODULE_TAGS := optional
 
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 25 || echo 1),)
+LOCAL_PROPRIETARY_MODULE := true
+endif
+
 include $(BUILD_EXECUTABLE)
