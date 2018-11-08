@@ -20,7 +20,12 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := keystore.tegra3
 
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 || echo 1),)
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_PROPRIETARY_MODULE := true
+else
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+endif
 
 LOCAL_SRC_FILES := \
 	keymaster_grouper.cpp
