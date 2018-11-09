@@ -52,6 +52,13 @@ PRODUCT_COPY_FILES += \
 	$(TEGRA3_BASE)/rootdir/init.tegra3.power.rc:root/init.tegra3.power.rc
 endif
 
+# Seccomp policy
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 || echo 1),)
+PRODUCT_COPY_FILES += \
+	$(TEGRA3_BASE)/seccomp/mediacodec.policy:system/vendor/etc/seccomp_policy/mediacodec.policy
+	$(TEGRA3_BASE)/seccomp/mediaextractor.policy:system/vendor/etc/seccomp_policy/mediaextractor.policy
+endif
+
 PRODUCT_PROPERTY_OVERRIDES += \
 	debug.hwui.render_dirty_regions=false \
 	persist.tegra.nvmmlite=1 \
