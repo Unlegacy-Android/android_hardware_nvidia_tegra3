@@ -1,13 +1,13 @@
 # Devices
 /dev/knvmap                       u:object_r:knv_device:s0
 /dev/tegra_camera                 u:object_r:video_device:s0
-/dev/nvhost.*                     u:object_r:nvhost_device:s0
-ifdef(`android_api_mm_or_later', `
+#ifdef(`android_api_mm_or_later', `
   /dev/nvhost-ctrl                  u:object_r:gpu_device:s0
   /dev/nvhost-gr2d                  u:object_r:gpu_device:s0
   /dev/nvhost-gr3d                  u:object_r:gpu_device:s0
   /dev/nvmap                        u:object_r:gpu_device:s0
-')
+#')
+/dev/nvhost.*                     u:object_r:nvhost_device:s0
 /dev/cpu_freq_min                 u:object_r:pmqos_device:s0
 /dev/cpu_freq_max                 u:object_r:pmqos_device:s0
 /dev/min_online_cpus              u:object_r:pmqos_device:s0
