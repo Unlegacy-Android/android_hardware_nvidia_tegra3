@@ -21,8 +21,8 @@ endif
 
 # >=7.0
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 24 || echo 1),)
-BOARD_SEPOLICY_M4DEFS += android_api_mm_or_later=true
-BOARD_SEPOLICY_M4DEFS += android_api_n_or_later=true
+BOARD_SEPOLICY_M4DEFS += android_api_mm_or_later
+BOARD_SEPOLICY_M4DEFS += android_api_n_or_later
 endif
 
 BOARD_SEPOLICY_DIRS += $(TEGRA3_SEPOLICY_BASE)
