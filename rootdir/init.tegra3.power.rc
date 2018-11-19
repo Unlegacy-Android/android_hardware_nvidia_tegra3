@@ -5,6 +5,9 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/cpu_user_cap
     chown system system /sys/devices/system/cpu/cpufreq/cpuload/enable
     chown system system /sys/devices/system/cpu/cpuquiet/current_governor
+    chown system system /sys/devices/system/cpu/cpufreq/conservative/up_threshold
+    chown system system /sys/devices/system/cpu/cpufreq/conservative/down_threshold
+    chown system system /sys/devices/system/cpu/cpufreq/conservative/freq_step
     # Setting the cpuquiet governor resets the sysfs permissions, so we set it here
     write /sys/devices/system/cpu/cpuquiet/current_governor balanced
     write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/enable 1
