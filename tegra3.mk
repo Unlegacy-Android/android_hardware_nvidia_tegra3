@@ -25,6 +25,11 @@ PRODUCT_PACKAGES += \
 	libc_util
 endif
 
+# Memtrack
+PRODUCT_PACKAGES += \
+	memtrack.tegra3 \
+	android.hardware.memtrack@1.0-impl
+
 # Keystore
 PRODUCT_PACKAGES += \
 	keystore.tegra3 \
