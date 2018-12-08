@@ -25,6 +25,13 @@ PRODUCT_PACKAGES += \
 	libc_util
 endif
 
+# Memtrack
+ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 25 || echo 1),)
+PRODUCT_PACKAGES += \
+	memtrack.tegra3 \
+	android.hardware.memtrack@1.0-impl
+endif
+
 # Keystore
 PRODUCT_PACKAGES += \
 	keystore.tegra3 \
