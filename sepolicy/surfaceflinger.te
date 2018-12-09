@@ -4,3 +4,7 @@ allow surfaceflinger sysfs_devices_tegradc:dir r_dir_perms;
 allow surfaceflinger sysfs_devices_tegradc:lnk_file r_file_perms;
 allow surfaceflinger sysfs_devices_system_cpu:dir w_dir_perms;
 allow surfaceflinger sysfs_modules_tegrafuse:file r_file_perms;
+
+# Allow excess to /data/data/surfaceflinger/cache/* and work with files there
+allow surfaceflinger system_data_file:dir rw_dir_perms;
+allow surfaceflinger system_data_file:file { rw_file_perms lock };
